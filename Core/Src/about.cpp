@@ -35,49 +35,19 @@ namespace CSabout {
         return 0;
     }
 
-/**
-作者：Pluto Hades
-链接：https://www.zhihu.com/question/40907940/answer/89216884
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
- */
     int PrintCompilerInfo() {
         std::cout << "Compilation date:" << __DATE__ << std::endl;
         std::cout << "Compilation time:" << __TIME__ << std::endl;
         std::cout << "Compilation time stamp:" << __TIMESTAMP__ << std::endl;
 
+        std::string compiler = GetCompilerType();
         std::string target_system = GetTargetSystem();
 
-        std::stringstream ss_full_version;
-
-        if (target_system == "Windows") {
-            #if defined(_MSC_FULL_VER)
-                ss_full_version << _MSC_FULL_VER;
-            #else
-                ss_full_version << "Unknown";
-            #endif
-        } else if (target_system == "Unix") {
-            #if defined(__VERSION__)
-                ss_full_version << __VERSION__;
-            #else
-                ss_full_version << "Unknown";
-            #endif
-        } else {
-            ss_full_version << "Unknown";
-        }
-
-        std::string full_version = ss_full_version.str();
+        std::string full_version = GetCompilerVersion(target_system);
 
         std::string target_platform = GetSystemArch(target_system);
 
-#if defined(_MSC_BUILD)
-        std::stringstream BUILD_INFO;
-        BUILD_INFO << _MSC_BUILD;
-        std::string build_info = BUILD_INFO.str();
-#else
-        std::string build_info = "Unknown";
-#endif
-        std::cout << "C/C++ Optimizing Compiler Version: " << full_version << " " << build_info << " for "
+        std::cout << "C/C++ Optimizing Compiler Version: " << compiler << " " << full_version <<  " for "
                   << target_platform << " On " << GetTargetSystem() << std::endl;
         return EXIT_SUCCESS;
     }
@@ -127,6 +97,38 @@ namespace CSabout {
             target_platform = "Unknown";
         }
         return target_platform;
+    }
+
+    std::string GetCompilerVersion(std::string target_system) {
+        std::stringstream ss_full_version;
+         if (target_system == "Windows") {
+            #if defined(_MSC_FULL_VER)
+                ss_full_version << _MSC_FULL_VER;
+            #else
+                ss_full_version << "Unknown";
+            #endif
+        } else if (target_system == "Unix") {
+            #if defined(__VERSION__)
+                ss_full_version << __VERSION__;
+            #else
+                ss_full_version << "Unknown";
+            #endif
+        } else {
+            ss_full_version << "Unknown";
+        }
+         return ss_full_version.str();
+    }
+
+    std::string GetCompilerType() {
+        #if defined(_MSC_BUILD)
+            return "MSVC";
+        #elif defined(__GNUC__) || defined(__GNUG__)
+            return "GCC";
+        #elif defined(__clang__)
+            return "Clang";
+        #else
+            return "Unknown";
+        #endif
     }
 }
 

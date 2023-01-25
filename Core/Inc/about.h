@@ -15,6 +15,10 @@ namespace CSabout {
     std::string GetTargetSystem();
 
     std::string GetSystemArch(std::string target_system);
+
+    std::string GetCompilerVersion(std::string target_system);
+
+    std::string GetCompilerType();
 }
 
 #endif //CALENDARSERVER_PYTHONTEST_H
