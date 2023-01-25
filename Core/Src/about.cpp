@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <clocale>
+#include <tuple>
 #include "about.h"
 #include <Python.h>
 
@@ -36,9 +37,11 @@ namespace CSabout {
     }
 
     int PrintCompilerInfo() {
-        std::cout << "Compilation date:" << __DATE__ << std::endl;
-        std::cout << "Compilation time:" << __TIME__ << std::endl;
-        std::cout << "Compilation time stamp:" << __TIMESTAMP__ << std::endl;
+        auto times = GetCompiledDate();
+
+        std::cout << "Compilation date:" << std::get<0>(times) << std::endl;
+        std::cout << "Compilation time:" << std::get<1>(times) << std::endl;
+        std::cout << "Compilation time stamp:" << std::get<2>(times) << std::endl;
 
         std::string compiler = GetCompilerType();
         std::string target_system = GetTargetSystem();
@@ -47,8 +50,7 @@ namespace CSabout {
 
         std::string target_platform = GetSystemArch(target_system);
 
-        std::cout << "C/C++ Optimizing Compiler Version: " << compiler << " " << full_version <<  " for "
-                  << target_platform << " On " << GetTargetSystem() << std::endl;
+        std::cout << "C/C++ Optimizing Compiler Version: " << compiler << " " << full_version << " for " << target_platform << " On " << GetTargetSystem() << std::endl;
         return EXIT_SUCCESS;
     }
 
@@ -129,6 +131,11 @@ namespace CSabout {
         #else
             return "Unknown";
         #endif
+    }
+
+    std::tuple<std::string, std::string, std::string> GetCompiledDate() {
+        std::tuple<std::string, std::string, std::string> times = std::make_tuple(__DATE__, __TIME__, __TIMESTAMP__);
+        return times;
     }
 }
 

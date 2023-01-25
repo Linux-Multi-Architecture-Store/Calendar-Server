@@ -6,6 +6,7 @@
 #define CALENDARSERVER_PYTHONTEST_H
 
 #include "string"
+#include <tuple>
 
 namespace CSabout {
     int TestPython();
@@ -19,6 +20,8 @@ namespace CSabout {
     std::string GetCompilerVersion(std::string target_system);
 
     std::string GetCompilerType();
+
+    std::tuple<std::string, std::string, std::string> GetCompiledDate();
 }
 
 #endif //CALENDARSERVER_PYTHONTEST_H
