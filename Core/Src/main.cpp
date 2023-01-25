@@ -1,6 +1,7 @@
-#include "pythontest.h"
+#include "main.h"
+#include "about.h"
 
 int main() {
-    TestPython();
+    CSabout::PrintCompilerInfo();
     return 0;
 }
