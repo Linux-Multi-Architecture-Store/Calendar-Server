@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project(CalSrv)
+add_definitions(-DPROJECT_VERSION_NUMBER="0.0.1-beta1")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -48,3 +49,13 @@ if (WIN32)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
+
+option(BUILD_TEST "Whether or not to build the tests" ON)
+if (${BUILD_TEST})
+    message(STATUS "Building tests")
+    enable_testing()  # Enable testing only works in root scope
+    # add_subdirectory(Tests)
+endif ()
+
+add_test(NAME ${PROJECT_NAME}
+        COMMAND ${PROJECT_NAME} --help)
