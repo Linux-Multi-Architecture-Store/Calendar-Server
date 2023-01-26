@@ -21,14 +21,23 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v3
       with:
-        aqtversion: '==2.1.*'
         version: '5.9.4'
         host: 'linux'
         target: 'desktop'
         arch: 'gcc_64'
-        dir: '${{ github.workspace }}/example/'
-        setup-python: 'false'
+        dir: '${{ github.workspace }}/Qt5Lib/'
+        install-deps: 'true'
+        modules: 'qtcharts qtwebengine'
+        archives: 'qtbase qtsvg'
+        cache: 'false'
+        cache-key-prefix: 'install-qt-action'
+        setup-python: 'true'
+        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
         set-env: 'true'
+        tools-only: 'false'
+        aqtversion: '==2.1.*'
+        py7zrversion: '==0.19.*'
+        extra: '--external 7z'
         
     - uses: actions/checkout@v3
 
