@@ -9,8 +9,6 @@
 #include <tuple>
 
 namespace CSabout {
-    int TestPython();
-
     int PrintCompilerInfo();
 
     std::string GetTargetSystem();

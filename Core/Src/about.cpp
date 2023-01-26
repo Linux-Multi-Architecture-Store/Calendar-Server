@@ -1,47 +1,17 @@
 #include <iostream>
-#include <cstdio>
 #include <sstream>
 #include <string>
-#include <clocale>
 #include <tuple>
+#include <QDebug>
 #include "about.h"
-#include <Python.h>
 
 namespace CSabout {
-    int TestPython() {
-        std::cout << "This is a Python test." << std::endl;
-
-        Py_Initialize();
-
-        PyRun_SimpleString("from time import time,ctime\n" "print('Today is', ctime(time()))\n");
-
-        Py_FinalizeEx();
-
-        auto numbers = 123;
-        std::cout << "Test C++11 functons." << std::endl;
-        std::cout << numbers << std::endl;
-
-        setlocale(LC_ALL, "");
-        std::ios::sync_with_stdio(false);
-
-        wchar_t wstr[] = L"你能输出中文？";
-        char str[] = "你能输出中文？";
-
-        std::wcout << wstr << std::endl;
-        wprintf(L"%ls\n", wstr);
-
-        std::cout << str << std::endl;
-        printf("%s\n", str);
-
-        return 0;
-    }
-
     int PrintCompilerInfo() {
         auto times = GetCompiledDate();
 
-        std::cout << "Compilation date:" << std::get<0>(times) << std::endl;
-        std::cout << "Compilation time:" << std::get<1>(times) << std::endl;
-        std::cout << "Compilation time stamp:" << std::get<2>(times) << std::endl;
+        qDebug() << "Compilation date:" << std::get<0>(times).c_str();
+        qDebug() << "Compilation time:" << std::get<1>(times).c_str();
+        qDebug() << "Compilation time stamp:" << std::get<2>(times).c_str();
 
         std::string compiler = GetCompilerType();
         std::string target_system = GetTargetSystem();
@@ -50,7 +20,7 @@ namespace CSabout {
 
         std::string target_platform = GetSystemArch(target_system);
 
-        std::cout << "C/C++ Optimizing Compiler Version: " << compiler << " " << full_version << " for " << target_platform << " On " << GetTargetSystem() << std::endl;
+        qDebug() << "C/C++ Optimizing Compiler Version:" << compiler.c_str() << full_version.c_str() << "for" << target_platform.c_str() << "On" << GetTargetSystem().c_str();
         return EXIT_SUCCESS;
     }
 
