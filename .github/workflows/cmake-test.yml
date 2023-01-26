@@ -24,7 +24,7 @@ jobs:
     - name: Install Qt
       run: | 
         sudo bash -c "apt install -y build-essential qt5-default cmake"
-        sudo bash -c "apt install -y libqt*dev"
+        sudo bash -c "apt install -y libqt5*dev"
         sudo bash -c "apt install -y qtdeclarative5-dev"
         
     - name: Configure CMake
