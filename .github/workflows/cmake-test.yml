@@ -18,6 +18,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        aqtversion: '==2.1.*'
+        version: '5.9.4'
+        host: 'linux'
+        target: 'desktop'
+        arch: 'gcc_64'
+        dir: '${{ github.workspace }}/example/'
+        setup-python: 'false'
+        set-env: 'true'
+        
     - uses: actions/checkout@v3
 
     - name: Configure CMake
